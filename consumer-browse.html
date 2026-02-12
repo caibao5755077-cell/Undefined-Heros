@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览商家 - UNDEFINED</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --brand-green: #2D6A5E;
+            --brand-green-light: #3A8577;
+            --brand-green-dark: #1F4A40;
+            --brand-accent: #7FBF6E;
+            --neutral-cream: #F5F3EF;
+            --neutral-dark: #1A1A2E;
+            --neutral-gray: #4A4A5E;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral-cream);
+            color: var(--neutral-dark);
+        }
+        
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--brand-green);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--neutral-gray);
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--brand-green);
+        }
+        
+        .btn-nav {
+            background: var(--brand-green);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+        
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px 60px;
+        }
+        
+        /* 页头 */
+        .page-header {
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--neutral-dark);
+            margin-bottom: 16px;
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            color: var(--neutral-gray);
+        }
+        
+        /* 筛选栏 */
+        .filters {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--neutral-dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .filter-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #E5E5E5;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--brand-green);
+        }
+        
+        .filter-search {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #E5E5E5;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        
+        .filter-search:focus {
+            outline: none;
+            border-color: var(--brand-green);
+        }
+        
+        /* 商家网格 */
+        .merchants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        
+        .merchant-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .merchant-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
+        .merchant-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+        }
+        
+        .merchant-content {
+            padding: 20px;
+        }
+        
+        .merchant-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+        
+        .merchant-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--neutral-dark);
+            margin-bottom: 4px;
+        }
+        
+        .merchant-badge {
+            background: var(--brand-accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .merchant-cuisine {
+            font-size: 14px;
+            color: var(--neutral-gray);
+            margin-bottom: 12px;
+        }
+        
+        .merchant-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--neutral-gray);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .rating {
+            color: #F59E0B;
+            font-weight: 600;
+        }
+        
+        .merchant-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid #F0F0F0;
+            font-size: 13px;
+        }
+        
+        .delivery-time {
+            color: var(--brand-green);
+            font-weight: 600;
+        }
+        
+        .delivery-fee {
+            color: var(--neutral-gray);
+        }
+        
+        .category-tag {
+            display: inline-block;
+            background: var(--neutral-cream);
+            color: var(--brand-green);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--neutral-gray);
+        }
+        
+        .no-results h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .merchants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="logo">undefined.</a>
+            <div class="nav-links">
+                <a href="/">主页</a>
+                <a href="/consumer-browse.html">浏览商家</a>
+                <a href="/auth-login.html" class="btn-nav">登录</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">浏览商家</h1>
+            <p class="page-subtitle">发现阿姆斯特丹最好的餐厅，每单支持€0.10癌症研究</p>
+        </div>
+        
+        <div class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label class="filter-label">搜索</label>
+                    <input type="text" class="filter-search" id="searchInput" placeholder="搜索餐厅名称或菜系...">
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">分类</label>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">全部分类</option>
+                        <option value="Fine Dining">Fine Dining</option>
+                        <option value="Comfort Food">Comfort Food</option>
+                        <option value="Healthy & Fresh">Healthy & Fresh</option>
+                        <option value="Asian Fusion">Asian Fusion</option>
+                        <option value="Bakery & Café">Bakery & Café</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">价格</label>
+                    <select class="filter-select" id="priceFilter">
+                        <option value="">全部价格</option>
+                        <option value="€">€ (经济实惠)</option>
+                        <option value="€€">€€ (中档)</option>
+                        <option value="€€€">€€€ (高档)</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">排序</label>
+                    <select class="filter-select" id="sortFilter">
+                        <option value="rating">评分最高</option>
+                        <option value="deliveryTime">配送最快</option>
+                        <option value="reviews">评论最多</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="merchants-grid" id="merchantsGrid">
+            <!-- 商家卡片将通过JavaScript动态生成 -->
+        </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="/firebase-config.js"></script>
+    
+    <script>
+        // 示例商家数据（实际应从Firebase获取）
+        const merchantsData = [
+            {
+                id: 1,
+                name: "La Bella Vita",
+                category: "Fine Dining",
+                cuisine: "意大利菜",
+                rating: 4.9,
+                reviews: 234,
+                priceRange: "€€€",
+                deliveryTime: "35-45 min",
+                deliveryFee: 3.50,
+                minOrder: 25.00,
+                featured: true,
+                image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400"
+            },
+            {
+                id: 2,
+                name: "Sakura Sushi Bar",
+                category: "Fine Dining",
+                cuisine: "日本料理",
+                rating: 4.8,
+                reviews: 189,
+                priceRange: "€€€",
+                deliveryTime: "40-50 min",
+                deliveryFee: 4.00,
+                minOrder: 30.00,
+                featured: true,
+                image: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400"
+            },
+            {
+                id: 3,
+                name: "Green Leaf Café",
+                category: "Healthy & Fresh",
+                cuisine: "素食/健康",
+                rating: 4.7,
+                reviews: 156,
+                priceRange: "€€",
+                deliveryTime: "25-35 min",
+                deliveryFee: 2.50,
+                minOrder: 15.00,
+                featured: true,
+                image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400"
+            },
+            {
+                id: 4,
+                name: "Pizza Paradiso",
+                category: "Comfort Food",
+                cuisine: "意大利披萨",
+                rating: 4.6,
+                reviews: 298,
+                priceRange: "€€",
+                deliveryTime: "20-30 min",
+                deliveryFee: 2.00,
+                minOrder: 12.00,
+                featured: false,
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400"
+            },
+            {
+                id: 5,
+                name: "Thai Orchid",
+                category: "Asian Fusion",
+                cuisine: "泰国菜",
+                rating: 4.8,
+                reviews: 167,
+                priceRange: "€€",
+                deliveryTime: "30-40 min",
+                deliveryFee: 3.00,
+                minOrder: 18.00,
+                featured: true,
+                image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400"
+            },
+            {
+                id: 6,
+                name: "Burger Joint",
+                category: "Comfort Food",
+                cuisine: "美式汉堡",
+                rating: 4.5,
+                reviews: 412,
+                priceRange: "€",
+                deliveryTime: "15-25 min",
+                deliveryFee: 1.50,
+                minOrder: 10.00,
+                featured: false,
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"
+            },
+            {
+                id: 7,
+                name: "Pho Vietnam",
+                category: "Asian Fusion",
+                cuisine: "越南粉",
+                rating: 4.7,
+                reviews: 203,
+                priceRange: "€€",
+                deliveryTime: "25-35 min",
+                deliveryFee: 2.50,
+                minOrder: 15.00,
+                featured: false,
+                image: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=400"
+            },
+            {
+                id: 8,
+                name: "Le Croissant",
+                category: "Bakery & Café",
+                cuisine: "法式烘焙",
+                rating: 4.9,
+                reviews: 145,
+                priceRange: "€€",
+                deliveryTime: "20-30 min",
+                deliveryFee: 2.00,
+                minOrder: 10.00,
+                featured: true,
+                image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400"
+            },
+            {
+                id: 9,
+                name: "Tandoori Palace",
+                category: "Asian Fusion",
+                cuisine: "印度菜",
+                rating: 4.6,
+                reviews: 178,
+                priceRange: "€€",
+                deliveryTime: "35-45 min",
+                deliveryFee: 3.00,
+                minOrder: 20.00,
+                featured: false,
+                image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400"
+            },
+            {
+                id: 10,
+                name: "Fresh Bowl",
+                category: "Healthy & Fresh",
+                cuisine: "沙拉/碗",
+                rating: 4.8,
+                reviews: 234,
+                priceRange: "€€",
+                deliveryTime: "15-25 min",
+                deliveryFee: 2.00,
+                minOrder: 12.00,
+                featured: true,
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400"
+            },
+            {
+                id: 11,
+                name: "Ramen House",
+                category: "Asian Fusion",
+                cuisine: "日本拉面",
+                rating: 4.7,
+                reviews: 189,
+                priceRange: "€€",
+                deliveryTime: "30-40 min",
+                deliveryFee: 2.50,
+                minOrder: 15.00,
+                featured: false,
+                image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=400"
+            },
+            {
+                id: 12,
+                name: "Taco Fiesta",
+                category: "Comfort Food",
+                cuisine: "墨西哥菜",
+                rating: 4.5,
+                reviews: 267,
+                priceRange: "€",
+                deliveryTime: "20-30 min",
+                deliveryFee: 2.00,
+                minOrder: 12.00,
+                featured: false,
+                image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400"
+            }
+        ];
+        
+        let filteredMerchants = [...merchantsData];
+        
+        // 渲染商家卡片
+        function renderMerchants(merchants) {
+            const grid = document.getElementById('merchantsGrid');
+            
+            if (merchants.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results">
+                        <h3>没有找到商家</h3>
+                        <p>试试调整筛选条件</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = merchants.map(merchant => `
+                <a href="merchant-detail.html?id=${merchant.id}" class="merchant-card">
+                    <img src="${merchant.image}" alt="${merchant.name}" class="merchant-image" onerror="this.style.background='linear-gradient(135deg, #2D6A5E 0%, #1F4A40 100%)'">
+                    <div class="merchant-content">
+                        <div class="merchant-header">
+                            <div>
+                                <div class="merchant-name">${merchant.name}</div>
+                                <div class="merchant-cuisine">${merchant.cuisine}</div>
+                            </div>
+                            ${merchant.featured ? '<span class="merchant-badge">特色</span>' : ''}
+                        </div>
+                        
+                        <div class="merchant-meta">
+                            <div class="meta-item">
+                                <span class="rating">⭐ ${merchant.rating}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>${merchant.reviews} 条评论</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>${merchant.priceRange}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="category-tag">${merchant.category}</div>
+                        
+                        <div class="merchant-footer">
+                            <span class="delivery-time">🚴 ${merchant.deliveryTime}</span>
+                            <span class="delivery-fee">配送费 €${merchant.deliveryFee.toFixed(2)}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+        
+        // 筛选和排序
+        function filterAndSort() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const price = document.getElementById('priceFilter').value;
+            const sort = document.getElementById('sortFilter').value;
+            
+            // 筛选
+            filteredMerchants = merchantsData.filter(m => {
+                const matchSearch = !searchTerm || 
+                    m.name.toLowerCase().includes(searchTerm) || 
+                    m.cuisine.toLowerCase().includes(searchTerm);
+                const matchCategory = !category || m.category === category;
+                const matchPrice = !price || m.priceRange === price;
+                
+                return matchSearch && matchCategory && matchPrice;
+            });
+            
+            // 排序
+            filteredMerchants.sort((a, b) => {
+                if (sort === 'rating') return b.rating - a.rating;
+                if (sort === 'reviews') return b.reviews - a.reviews;
+                if (sort === 'deliveryTime') {
+                    const timeA = parseInt(a.deliveryTime.split('-')[0]);
+                    const timeB = parseInt(b.deliveryTime.split('-')[0]);
+                    return timeA - timeB;
+                }
+                return 0;
+            });
+            
+            renderMerchants(filteredMerchants);
+        }
+        
+        // 事件监听
+        document.getElementById('searchInput').addEventListener('input', filterAndSort);
+        document.getElementById('categoryFilter').addEventListener('change', filterAndSort);
+        document.getElementById('priceFilter').addEventListener('change', filterAndSort);
+        document.getElementById('sortFilter').addEventListener('change', filterAndSort);
+        
+        // 初始渲染
+        renderMerchants(filteredMerchants);
+        
+        // 尝试从Firebase加载真实数据
+        if (typeof firebase !== 'undefined' && firebase.firestore) {
+            const db = firebase.firestore();
+            db.collection('merchants').where('active', '==', true).get()
+                .then(snapshot => {
+                    if (!snapshot.empty) {
+                        merchantsData.length = 0;
+                        snapshot.forEach(doc => {
+                            merchantsData.push({ id: doc.id, ...doc.data() });
+                        });
+                        filterAndSort();
+                        console.log('✅ 已从Firebase加载商家数据');
+                    }
+                })
+                .catch(err => console.log('使用示例数据:', err.message));
+        }
+    </script>
+</body>
+</html>

@@ -1,7 +1,16 @@
 // Firebase配置文件
 // ⚠️ 这个文件需要你用自己的Firebase项目配置替换
 
-npm install firebase
+// Firebase配置
+const firebaseConfig = {
+  apiKey: "AIzaSyAiQeP8jOgFWsh4yNzRaLPjl3yD7Lgov0w",
+  authDomain: "undefined-heros.firebaseapp.com",
+  projectId: "undefined-heros",
+  storageBucket: "undefined-heros.firebasestorage.app",
+  messagingSenderId: "962146875919",
+  appId: "1:962146875919:web:a17d052ab6e8aa025147a",
+  measurementId: "G-RGQV4394LB"
+};
 
 // 初始化Firebase
 if (typeof firebase !== 'undefined') {

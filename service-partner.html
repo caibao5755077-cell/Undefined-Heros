@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务合作伙伴网络 - UNDEFINED</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --brand-green: #2D6A5E;
+            --brand-green-light: #3A8577;
+            --brand-green-dark: #1F4A40;
+            --brand-accent: #7FBF6E;
+            --neutral-cream: #F5F3EF;
+            --neutral-dark: #1A1A2E;
+            --neutral-gray: #4A4A5E;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral-cream);
+            color: var(--neutral-dark);
+            line-height: 1.6;
+        }
+        
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--brand-green);
+            text-decoration: none;
+        }
+        
+        .nav-links a {
+            margin-left: 40px;
+            text-decoration: none;
+            color: var(--neutral-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover { color: var(--brand-green); }
+        
+        /* Hero - 白色 */
+        .hero {
+            margin-top: 80px;
+            padding: 100px 40px;
+            background: white;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero-tagline {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brand-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 7vw, 72px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: var(--neutral-dark);
+        }
+        
+        .hero-title .highlight { color: var(--brand-green); }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            line-height: 1.7;
+            color: var(--neutral-gray);
+            max-width: 700px;
+            margin-bottom: 16px;
+        }
+        
+        /* Model - 绿色强调块 */
+        .model-section {
+            padding: 100px 40px;
+            background: var(--neutral-cream);
+        }
+        
+        .model-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .model-box {
+            background: var(--brand-green);
+            color: white;
+            padding: 60px;
+            border-radius: 8px;
+        }
+        
+        .model-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .model-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        
+        .model-header p {
+            font-size: 18px;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+        
+        .model-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+        
+        .model-side h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .model-side ul { list-style: none; }
+        
+        .model-side li {
+            padding: 12px 0 12px 28px;
+            position: relative;
+            font-size: 15px;
+            opacity: 0.95;
+        }
+        
+        .model-side li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+            color: var(--brand-accent);
+        }
+        
+        /* Partner Types - 白色背景 */
+        .partner-types {
+            padding: 120px 40px;
+            background: white;
+        }
+        
+        .partner-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--neutral-dark);
+        }
+        
+        .partner-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        
+        .partner-card {
+            background: var(--neutral-cream);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        
+        .partner-card-header {
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+            color: white;
+            padding: 32px;
+        }
+        
+        .partner-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .partner-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+        
+        .partner-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .partner-card-body { padding: 32px; }
+        
+        .partner-section { margin-bottom: 28px; }
+        .partner-section:last-child { margin-bottom: 0; }
+        
+        .partner-section h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--neutral-dark);
+            margin-bottom: 12px;
+        }
+        
+        .partner-section ul { list-style: none; }
+        
+        .partner-section li {
+            padding: 6px 0 6px 20px;
+            position: relative;
+            color: var(--neutral-gray);
+            font-size: 14px;
+        }
+        
+        .partner-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--brand-green);
+            font-weight: 900;
+        }
+        
+        /* Revenue - 米白色背景 */
+        .revenue {
+            padding: 100px 40px;
+            background: var(--neutral-cream);
+        }
+        
+        .revenue-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .revenue-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .revenue-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: var(--neutral-dark);
+        }
+        
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        
+        .revenue-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        
+        .revenue-label {
+            font-size: 13px;
+            color: var(--neutral-gray);
+            margin-bottom: 12px;
+        }
+        
+        .revenue-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: var(--brand-green);
+        }
+        
+        .revenue-description {
+            font-size: 12px;
+            color: var(--neutral-gray);
+            line-height: 1.5;
+        }
+        
+        /* App - 白色背景 */
+        .app-section {
+            padding: 100px 40px;
+            background: white;
+        }
+        
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .app-image {
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+            aspect-ratio: 4/3;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+        }
+        
+        .app-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--neutral-dark);
+        }
+        
+        .app-tagline {
+            font-size: 16px;
+            color: var(--neutral-gray);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+        
+        .app-features { list-style: none; }
+        
+        .app-features li {
+            padding: 12px 0 12px 28px;
+            position: relative;
+            font-size: 15px;
+            color: var(--neutral-gray);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        
+        .app-features li:last-child { border-bottom: none; }
+        
+        .app-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--brand-green);
+            font-weight: 900;
+            font-size: 18px;
+        }
+        
+        /* Benefits - 米白色 */
+        .benefits {
+            padding: 100px 40px;
+            background: var(--neutral-cream);
+        }
+        
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        
+        .benefit-icon {
+            font-size: 44px;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 12px;
+            color: var(--neutral-dark);
+        }
+        
+        .benefit-card ul { list-style: none; }
+        
+        .benefit-card li {
+            padding: 10px 0 10px 24px;
+            position: relative;
+            color: var(--neutral-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .benefit-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--brand-green);
+            font-weight: 900;
+        }
+        
+        /* CTA - 绿色强调块 */
+        .cta {
+            padding: 80px 40px;
+            background: white;
+        }
+        
+        .cta-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .cta-box {
+            background: var(--brand-green);
+            color: white;
+            padding: 60px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .cta-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .cta-subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 36px;
+            line-height: 1.6;
+        }
+        
+        .cta-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 32px;
+            margin-top: 40px;
+        }
+        
+        .cta-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            text-align: left;
+        }
+        
+        .contact-item h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+        }
+        
+        .contact-item p {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background: white;
+            color: var(--brand-green);
+            padding: 16px 40px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 1024px) {
+            .model-grid, .partner-grid, .app-container, .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .revenue-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .revenue-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="index-v3.html" class="logo">undefined.</a>
+            <div class="nav-links">
+                <a href="index-v3.html">返回首页</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-tagline">Service Partner Network</div>
+            <h1 class="hero-title">
+                成为 <span class="highlight">undefined.</span><br>
+                服务合作伙伴网络
+            </h1>
+            <p class="hero-subtitle">
+                UNDEFINED构建了一个新的、去中心化的e-bike服务网络。
+            </p>
+            <p class="hero-subtitle">
+                无库存。无销售压力。只做你擅长的事：维护、组装和服务。
+            </p>
+        </div>
+    </section>
+    
+    <section class="model-section">
+        <div class="model-container">
+            <div class="model-box">
+                <div class="model-header">
+                    <h2>Service-First 模式</h2>
+                    <p>
+                        UNDEFINED直接向消费者销售自行车。<br>
+                        我们的合作伙伴不赚取销售利润，而是赚取服务费用。
+                    </p>
+                </div>
+                
+                <div class="model-grid">
+                    <div class="model-side">
+                        <h3>我们负责</h3>
+                        <ul>
+                            <li>销售和客户获取</li>
+                            <li>数字基础设施</li>
+                            <li>订单分配系统</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="model-side">
+                        <h3>你负责</h3>
+                        <ul>
+                            <li>技术工作</li>
+                            <li>本地服务</li>
+                            <li>直接收入</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="partner-types">
+        <div class="partner-container">
+            <h2 class="section-title">两种合作伙伴类型</h2>
+            
+            <div class="partner-grid">
+                <div class="partner-card">
+                    <div class="partner-card-header">
+                        <div class="partner-label">A. Werkplaats / Fietsenzaak</div>
+                        <h3 class="partner-name">Authorized Service Center</h3>
+                        <p class="partner-subtitle">工作坊 / 自行车店</p>
+                    </div>
+                    
+                    <div class="partner-card-body">
+                        <div class="partner-section">
+                            <h4>你的角色</h4>
+                            <ul>
+                                <li>PDI & 新车组装</li>
+                                <li>交付给客户</li>
+                                <li>保修和大型维修</li>
+                                <li>高容量服务中心</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="partner-section">
+                            <h4>你的优势</h4>
+                            <ul>
+                                <li>无库存风险</li>
+                                <li>稳定的服务收入</li>
+                                <li>通过UNDEFINED获得更多店内流量</li>
+                                <li>冬季收入（批量组装）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="partner-card">
+                    <div class="partner-card-header">
+                        <div class="partner-label">B. Mobiele Monteur / ZZP'er</div>
+                        <h3 class="partner-name">Handy Man</h3>
+                        <p class="partner-subtitle">移动技师 / 个体户</p>
+                    </div>
+                    
+                    <div class="partner-card-body">
+                        <div class="partner-section">
+                            <h4>你的角色</h4>
+                            <ul>
+                                <li>上门维护</li>
+                                <li>小型维修</li>
+                                <li>灵活可用</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="partner-section">
+                            <h4>你的优势</h4>
+                            <ul>
+                                <li>随时工作</li>
+                                <li>无需工作坊</li>
+                                <li>100%前程费用归你</li>
+                                <li>通过app获客 - 无需营销</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="revenue">
+        <div class="revenue-container">
+            <div class="revenue-header">
+                <h2>如何赚钱？</h2>
+            </div>
+            
+            <div class="revenue-grid">
+                <div class="revenue-card">
+                    <div class="revenue-label">推荐佣金</div>
+                    <div class="revenue-value">5–8%</div>
+                    <div class="revenue-description">通过你的代码销售</div>
+                </div>
+                
+                <div class="revenue-card">
+                    <div class="revenue-label">PDI & 交付</div>
+                    <div class="revenue-value">€60–80</div>
+                    <div class="revenue-description">每次新车组装</div>
+                </div>
+                
+                <div class="revenue-card">
+                    <div class="revenue-label">服务包</div>
+                    <div class="revenue-value">±80%</div>
+                    <div class="revenue-description">收入归你</div>
+                </div>
+                
+                <div class="revenue-card">
+                    <div class="revenue-label">配件销售</div>
+                    <div class="revenue-value">100%</div>
+                    <div class="revenue-description">店内利润</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="app-section">
+        <div class="app-container">
+            <div class="app-image">📱</div>
+            
+            <div class="app-content">
+                <h2>智能订单分配<br>通过Partner App</h2>
+                <p class="app-tagline">
+                    类似Uber，但专为自行车服务设计
+                </p>
+                
+                <ul class="app-features">
+                    <li>基于位置自动分配订单</li>
+                    <li>无需获客</li>
+                    <li>工作和收入全面概览</li>
+                    <li>实时通知和路线导航</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <section class="benefits">
+        <div class="benefits-container">
+            <h2 class="section-title">为什么选择UNDEFINED？</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">❄️</div>
+                    <h3>冬季解决方案</h3>
+                    <ul>
+                        <li>冬季预售活动</li>
+                        <li>1-2月批量组装</li>
+                        <li>无需库存采购的现金流</li>
+                        <li>不再有淡季月份</li>
+                    </ul>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🔧</div>
+                    <h3>Mechanic-Friendly E-bikes</h3>
+                    <ul>
+                        <li>模块化电子系统</li>
+                        <li>标准部件 (Shimano, Tektro)</li>
+                        <li>无封闭系统</li>
+                        <li>易于维护设计</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <div class="cta-container">
+            <div class="cta-box">
+                <h2>准备加入了吗？</h2>
+                <p class="cta-subtitle">
+                    无库存。无销售压力。收入明确。<br>
+                    扫描二维码或联系我们开始合作。
+                </p>
+                
+                <a href="#" class="btn-primary">立即申请</a>
+                
+                <div class="cta-info">
+                    <h3>联系我们</h3>
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <h4>电话</h4>
+                            <p>+31 0763030503</p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>邮箱</h4>
+                            <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6bfb8b0b996a3b8b2b3b0bfb8b3b2f8b4bfbdb3">[email&#160;protected]</a></p>
+                        </div>
+                        <div class="contact-item">
+                            <h4>地址</h4>
+                            <p>Amstelveen, NL</p>
+                        

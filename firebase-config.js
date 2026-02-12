@@ -1,15 +1,7 @@
 // Firebase配置文件
 // ⚠️ 这个文件需要你用自己的Firebase项目配置替换
 
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "undefined-delivery.firebaseapp.com",
-  projectId: "undefined-delivery",
-  storageBucket: "undefined-delivery.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
-};
+npm install firebase
 
 // 初始化Firebase
 if (typeof firebase !== 'undefined') {

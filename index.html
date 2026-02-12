@@ -1,39 +1,693 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>UNDEFINED</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UNDEFINED - Service-First Delivery Platform">
+    <meta name="theme-color" content="#2D6A5E">
+    <title>UNDEFINED - Service-First Delivery Platform</title>
+    <link rel="manifest" href="/manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --brand-green: #2D6A5E;
+            --brand-green-light: #3A8577;
+            --brand-green-dark: #1F4A40;
+            --brand-accent: #7FBF6E;
+            --neutral-cream: #F5F3EF;
+            --neutral-dark: #1A1A2E;
+            --neutral-gray: #4A4A5E;
+        }
+        
         body {
-            margin: 0;
-            font-family: sans-serif;
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral-cream);
+            color: var(--neutral-dark);
+            line-height: 1.6;
+        }
+        
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--brand-green);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--neutral-gray);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--brand-green);
+        }
+        
+        .btn-nav {
+            background: var(--brand-green);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn-nav:hover {
+            background: var(--brand-green-dark);
+            transform: translateY(-1px);
+        }
+        
+        .hero {
+            margin-top: 80px;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            background: white;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+        
+        .hero-tagline {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brand-green);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 7vw, 80px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 32px;
+            color: var(--neutral-dark);
+        }
+        
+        .hero-title .highlight {
+            color: var(--brand-green);
+        }
+        
+        .hero-description {
+            font-size: 20px;
+            line-height: 1.7;
+            color: var(--neutral-gray);
+            margin-bottom: 48px;
+            max-width: 600px;
+        }
+        
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 600px;
+            padding: 40px;
+            background: var(--neutral-cream);
+            border-radius: 8px;
+        }
+        
+        .hero-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: var(--brand-green);
+        }
+        
+        .hero-stat-label {
+            font-size: 13px;
+            color: var(--neutral-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .services {
+            padding: 120px 40px;
+            background: var(--neutral-cream);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-tagline {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brand-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 24px;
+            color: var(--neutral-dark);
+        }
+        
+        .section-description {
+            font-size: 18px;
+            color: var(--neutral-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #2D6A5E, #7FBF6E);
+            font-size: 64px;
         }
-        .box {
+        
+        .service-content {
+            padding: 32px;
+        }
+        
+        .service-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .service-description {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--neutral-gray);
+            margin-bottom: 24px;
+        }
+        
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brand-green);
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .impact {
+            padding: 100px 40px;
             background: white;
-            padding: 60px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        h1 {
-            color: #2D6A5E;
+        
+        .impact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .impact-content {
+            background: var(--brand-green);
+            color: white;
+            padding: 80px 60px;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .impact-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .impact-text h2 {
+            font-family: 'Playfair Display', serif;
             font-size: 48px;
-            margin: 0 0 20px 0;
+            font-weight: 900;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        
+        .impact-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            opacity: 0.95;
+            margin-bottom: 32px;
+        }
+        
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+        
+        .impact-stat {
+            border-left: 3px solid var(--brand-accent);
+            padding-left: 20px;
+        }
+        
+        .impact-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+        
+        .impact-stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--brand-green);
+            padding: 16px 32px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-white:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta {
+            padding: 120px 40px;
+            text-align: center;
+            background: white;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cta h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 24px;
+        }
+        
+        .cta p {
+            font-size: 18px;
+            color: var(--neutral-gray);
+            margin-bottom: 40px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: var(--brand-green);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn-primary:hover {
+            background: var(--brand-green-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--neutral-dark);
+            padding: 18px 40px;
+            border-radius: 8px;
+            border: 2px solid var(--neutral-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--neutral-dark);
+            color: white;
+        }
+        
+        footer {
+            background: var(--neutral-dark);
+            color: white;
+            padding: 60px 40px 40px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .footer-brand p {
+            opacity: 0.7;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        
+        .footer-links h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin-bottom: 12px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 1024px) {
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>undefined.</h1>
-        <div style="background: #7FBF6E; color: white; padding: 20px; border-radius: 10px; margin: 30px 0; font-weight: bold; font-size: 24px;">
-            ✅ 成功部署！
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="logo">undefined.</a>
+            <div class="nav-links">
+                <a href="#services">服务</a>
+                <a href="#impact">影响</a>
+                <a href="#partners">合作</a>
+                <a href="consumer-browse.html" class="btn-nav">开始使用</a>
+            </div>
         </div>
-        <p>你的UNDEFINED平台已上线</p>
-    </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-tagline">Service-First Delivery</div>
+            <h1 class="hero-title">
+                不只是配送，<br>是<span class="highlight">社会运动</span>
+            </h1>
+            <p class="hero-description">
+                我们不再是零售商。我们是更智能、更环保的城市交通解决方案平台。
+                每一单配送，都在支持癌症研究。
+            </p>
+            
+            <div class="hero-stats">
+                <div>
+                    <div class="hero-stat-value">€125K</div>
+                    <div class="hero-stat-label">已捐赠</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">1.2M</div>
+                    <div class="hero-stat-label">完成订单</div>
+                </div>
+                <div>
+                    <div class="hero-stat-value">850+</div>
+                    <div class="hero-stat-label">活跃骑手</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="services" id="services">
+        <div class="section-header">
+            <div class="section-tagline">为每个人设计</div>
+            <h2 class="section-title">三个入口，一个使命</h2>
+            <p class="section-description">
+                无论你是消费者、商家还是骑手，UNDEFINED都为你提供简单、透明、有使命感的服务
+            </p>
+        </div>
+        
+        <div class="service-grid">
+            <a href="consumer-browse.html" class="service-card">
+                <div class="service-image">🛍️</div>
+                <div class="service-content">
+                    <h3 class="service-title">消费者</h3>
+                    <p class="service-description">
+                        30分钟送达。透明定价。每单€0.10捐赠抗癌。
+                        不只是外卖，还有快递代取服务。
+                    </p>
+                    <span class="service-link">开始订餐 →</span>
+                </div>
+            </a>
+            
+            <a href="service-partner.html" class="service-card">
+                <div class="service-image">🏪</div>
+                <div class="service-content">
+                    <h3 class="service-title">商家合作</h3>
+                    <p class="service-description">
+                        12-18%低佣金。无库存风险。专属Account Manager。
+                        前100家享0%首月佣金。
+                    </p>
+                    <span class="service-link">申请入驻 →</span>
+                </div>
+            </a>
+            
+            <a href="#rider" class="service-card">
+                <div class="service-image">🚴</div>
+                <div class="service-content">
+                    <h3 class="service-title">成为骑手</h3>
+                    <p class="service-description">
+                        8-36个月拥有€2,300 E-bike。双钱包系统。
+                        灵活时间，每单赚取现金+资产。
+                    </p>
+                    <span class="service-link">了解计划 →</span>
+                </div>
+            </a>
+        </div>
+    </section>
+    
+    <section class="impact" id="impact">
+        <div class="impact-container">
+            <div class="impact-content">
+                <div class="impact-grid">
+                    <div class="impact-text">
+                        <h2>每一单配送，<br>都在改变世界</h2>
+                        <p>
+                            我们与KWF Kankerbestrijding官方合作，将每单€0.10捐赠用于癌症研究。
+                            这不是营销噱头，而是我们的核心使命。
+                        </p>
+                        <a href="#" class="btn-white">查看社会影响</a>
+                    </div>
+                    
+                    <div class="impact-stats">
+                        <div class="impact-stat">
+                            <div class="impact-stat-value">€125K</div>
+                            <div class="impact-stat-label">累计捐赠金额</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="impact-stat-value">750h</div>
+                            <div class="impact-stat-label">支持的研究时长</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="impact-stat-value">50个</div>
+                            <div class="impact-stat-label">受益家庭</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="impact-stat-value">1.2M</div>
+                            <div class="impact-stat-label">完成订单数</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta" id="partners">
+        <div class="cta-container">
+            <h2>准备加入我们了吗？</h2>
+            <p>
+                无论你是想享受便捷配送的消费者，寻求低佣金的商家，
+                还是想赚取E-bike的骑手，UNDEFINED都欢迎你。
+            </p>
+            <div class="cta-buttons">
+                <a href="consumer-browse.html" class="btn-primary">开始订餐</a>
+                <a href="service-partner.html" class="btn-secondary">成为合作伙伴</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>undefined.</h3>
+                <p>
+                    更智能、更环保的城市交通解决方案平台。
+                    Service-First理念，社会使命驱动。
+                </p>
+            </div>
+            
+            <div class="footer-links">
+                <h4>消费者</h4>
+                <a href="consumer-browse.html">浏览商家</a>
+                <a href="#">我的订单</a>
+                <a href="#">我的影响</a>
+                <a href="pickup-create.html">快递代取</a>
+            </div>
+            
+            <div class="footer-links">
+                <h4>合作伙伴</h4>
+                <a href="#">商家入驻</a>
+                <a href="service-partner.html">服务合作</a>
+                <a href="#">成为骑手</a>
+            </div>
+            
+            <div class="footer-links">
+                <h4>公司</h4>
+                <a href="#">关于我们</a>
+                <a href="#">社会影响</a>
+                <a href="#">联系我们</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div>© 2026 UNDEFINED. 与KWF Kankerbestrijding官方合作。</div>
+            <div>Service-First Delivery Platform</div>
+        </div>
+    </footer>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(() => console.log('✅ PWA Ready'))
+                .catch(err => console.log('❌ SW Error:', err));
+        }
+    </script>
 </body>
 </html>
